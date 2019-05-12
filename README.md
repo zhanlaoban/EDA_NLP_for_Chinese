@@ -7,13 +7,13 @@
 # 使用方法
 
 1. 先将需要处理的语料按照下面的例子处理好成固定的格式：
-
+```
 0	今天天气不错哦。
 
 1	今天天气不行啊！不能出去玩了。
 
 0	又是阳光明媚的一天！
-
+```
 
 
 即，标签+一个制表符\t+内容
@@ -22,7 +22,7 @@
 
 2. 命令使用例子：
 
-​	$python code/augment.py --input=train.txt --output=train_augmented.txt --num_aug=16 --alpha=0.05
+`$python code/augment.py --input=train.txt --output=train_augmented.txt --num_aug=16 --alpha=0.05`
 
 这里：
 
