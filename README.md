@@ -3,7 +3,8 @@
 本工具是论文《EDA: Easy Data Augmentation Techniques for Boosting Performance on Text Classification Tasks》的代码实现。  
 原作者虽给出了针对英文语料数据增强的代码实现，但不适合中文语料。我经过对原论文附上的代码的修改，现在推出这个适合中文语料的数据增强EDA的实现。
 
-# TODO：即将推出 论文阅读笔记
+# TODO：即将推出 原论文阅读笔记
+# TODO：尝试替换不同的同义词库，测试它们的效果
 
 # 使用方法
 
