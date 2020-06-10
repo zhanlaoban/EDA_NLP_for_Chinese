@@ -1,11 +1,11 @@
-# NLP中数据增强的实现
+# EDA_NLP_for_Chinese
 
-本工具是论文[《EDA: Easy Data Augmentation Techniques for Boosting Performance on Text Classification Tasks》](https://arxiv.org/abs/1901.11196)的代码实现。  
+中文EDA实现。本工具是论文[《EDA: Easy Data Augmentation Techniques for Boosting Performance on Text Classification Tasks》](https://arxiv.org/abs/1901.11196)的中文版本实现。  
 原作者虽给出了针对英文语料数据增强的代码实现，但不适合中文语料。我经过对原论文附上的代码的修改，现在推出这个适合中文语料的数据增强EDA的实现。
 
-# TODO：尝试替换不同的中文同义词库，测试它们的效果
 
-# 使用方法
+
+# Usage
 
 1. 先将需要处理的语料按照下面的例子处理好成固定的格式：
 ```
@@ -18,8 +18,6 @@
 
 
 即，标签+一个制表符\t+内容
-
-
 
 2. 命令使用例子：
 
@@ -41,18 +39,38 @@ alpha参数：每一条语料中改动的词所占的比例
 
 
 
-# 参考/感谢
+# Chinese stopwords
+
+| 词表名                         | 词表文件            |
+| ------------------------------ | ------------------- |
+| 中文停用词表                   | cn_stopwords.txt    |
+| 哈工大停用词表                 | hit_stopwords.txt   |
+| 百度停用词表                   | baidu_stopwords.txt |
+| 四川大学机器智能实验室停用词库 | scu_stopwords.txt   |
+
+
+
+# Reference
 
 - 原仓库：[eda_nlp](https://github.com/jasonwei20/eda_nlp)。感谢原作者的付出。Thanks to the author of the paper.
 
+
+
+# Acknowledgments
+
 - [jieba分词](https://github.com/fxsjy/jieba)
 - [Synonyms](https://github.com/huyingxi/Synonyms)
+- [stopwords](https://github.com/goto456/stopwords)
+
+
+
 
 
 # 原论文阅读笔记  
+
 [《EDA: Easy Data Augmentation Techniques for Boosting Performance on Text Classification Tasks》](https://arxiv.org/abs/1901.11196)
 
-  
+
 # 简介
 
 
@@ -85,7 +103,7 @@ alpha参数：每一条语料中改动的词所占的比例
 
 这些方法里，只有SR曾经被人研究过，其他三种方法都是本文作者首次提出。
 
-值得一提的是，长句子相对于短句子，存在一个特性：长句比短句有更多的单词，因此长句在保持原有的类别标签的情况下，能吸收更多的噪声。为了充分利用这个特性，作者提出一个方法：基于句子长度来变化改变的单词数，换句话说，就是不同的句长，因增强而改变的单词数可能不同。具体实现：对于SR、RI、RS，遵循公式：$n$ = $\alpha$ * $l$，$l$ 表示句长，$\alpha$ 表示一个句子中需要改变的单词数的比例。在RD中，让 $p$ 和 $\alpha$ 相等。另外，每个原始句子，生成个增强的句子。
+值得一提的是，长句子相对于短句子，存在一个特性：长句比短句有更多的单词，因此长句在保持原有的类别标签的情况下，能吸收更多的噪声。为了充分利用这个特性，作者提出一个方法：基于句子长度来变化改变的单词数，换句话说，就是不同的句长，因增强而改变的单词数可能不同。具体实现：对于SR、RI、RS，遵循公式：$n$ = $\alpha$ * $l$，$l$ 表示句长，$\alpha$ 表示一个句子中需要改变的单词数的比例。在RD中，让 $p$ 和 $\alpha$ 相等。另外，每个原始句子，生成 $n_{aug}$ 个增强的句子。
 
  
 
@@ -102,7 +120,6 @@ alpha参数：每一条语料中改动的词所占的比例
 
 ![2019-05-16_071449.png](https://i.loli.net/2019/05/16/5cdd0e15105fd83061.png)
 <center>表1</center>
-
 - 作者指出，EDA在小训练集上有更好的性能效果。若使用完整的训练集数据，不使用EDA的情况下，最佳的平均准确率达到88.3%。若使用50%的训练集数据并且使用EDA的情况下，最佳的平均准确率达到88.6%，超过前述情况。
 
 - 若句子中有多个单词被改变了，那么句子的原始标签类别是否还会有效？作者做了实验：首先，使用RNN在一未使用EDA过的数据集上进行训练；然后，对测试集进行EDA扩增，每个原始句子扩增出9个增强的句子，将这些句子作为测试集输入到RNN中；最后，从最后一个全连接层取出输出向量。应用t-SNE技术，将这些向量以二维的形式表示出来。实验结果就是，增强句子的隐藏空间表征紧紧环绕在这些原始句子的周围。作者的结论是，句子中有多个单词被改变了，那么句子的原始标签类别就可能无效了。
@@ -113,7 +130,6 @@ alpha参数：每一条语料中改动的词所占的比例
 
 ![2019-05-17_152900.png](https://i.loli.net/2019/05/17/5cde62e5a4c5a76804.png)
 <center>表2</center>
-
 ​		其中，$n_{aug}$ ：每个原始语句的增强语句个数；$N_{train}$：训练集大小
 
 
