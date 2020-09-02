@@ -34,8 +34,8 @@ if args.alpha:
 
 def gen_eda(train_orig, output_file, alpha, num_aug=9):
 
-    writer = open(output_file, 'w')
-    lines = open(train_orig, 'r').readlines()
+    writer = open(output_file, 'w', encoding = "UTF-8")
+    lines = open(train_orig, 'r', encoding = 'UTF-8').readlines()
 
     print("正在使用EDA生成增强语句...")
     for i, line in enumerate(lines):
